@@ -293,7 +293,7 @@
       
       <div class="contact-content">
         <div class="contact-form">
-          <form>
+          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
             <div class="form-group">
               <label for="name">Your name (required):</label>
               <input type="text" id="name" name="name" required>
@@ -304,12 +304,15 @@
             </div>
             <div class="form-group">
               <label for="email">Your E-Mail (required):</label>
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" name="_replyto" required>
             </div>
             <div class="form-group">
               <label for="message">Your message:</label>
               <textarea id="message" name="message" rows="4"></textarea>
             </div>
+            <!-- Hidden field to identify the form source -->
+            <input type="hidden" name="_subject" value="New Contact Form Submission from Chess Coaching Website">
+            <input type="hidden" name="_next" value="https://hungrossi.github.io/chess_coach/#contact">
             <button type="submit" class="submit-button">SEND MESSAGE</button>
           </form>
         </div>
@@ -365,42 +368,49 @@
   </div>
 
   <script>
-    // Form submission handler
+    // Form submission handler for Formspree
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.querySelector('.contact-form form');
       
       form.addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
         
-        // Get form data
         const formData = new FormData(form);
-        const name = formData.get('name');
-        const phone = formData.get('phone');
-        const email = formData.get('email');
-        const message = formData.get('message');
+        const submitButton = form.querySelector('.submit-button');
         
-        // Create email content
-        const emailSubject = `New Contact Form Submission from ${name}`;
-        const emailBody = `
-Name: ${name}
-Phone: ${phone || 'Not provided'}
-Email: ${email}
-Message: ${message || 'No message provided'}
-
-This message was sent from your chess coaching website contact form.
-        `;
+        // Disable submit button and show loading state
+        submitButton.textContent = 'SENDING...';
+        submitButton.disabled = true;
         
-        // Send email using mailto (opens email client)
-        const mailtoLink = `mailto:hungpq.chess@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-        
-        // Open email client
-        window.location.href = mailtoLink;
-        
-        // Show success popup
-        showPopup();
-        
-        // Reset form
-        form.reset();
+        // Submit to Formspree
+        fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            // Success - show popup and reset form
+            showPopup();
+            form.reset();
+          } else {
+            // Error - show error message
+            response.json().then(data => {
+              if (Object.hasOwnProperty.call(data, 'errors')) {
+                alert('There was a problem with your submission: ' + data.errors.map(error => error.message).join(', '));
+              } else {
+                alert('Oops! There was a problem submitting your form. Please try again or contact us directly.');
+              }
+            });
+          }
+        }).catch(error => {
+          alert('Network error. Please check your connection and try again.');
+        }).finally(() => {
+          // Re-enable submit button
+          submitButton.textContent = 'SEND MESSAGE';
+          submitButton.disabled = false;
+        });
       });
     });
     
