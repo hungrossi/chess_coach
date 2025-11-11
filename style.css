@@ -67,13 +67,59 @@ body {
   color: #3498db;
 }
 
+/* Banner Image Section */
+.banner-image {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin-top: 70px;
+  overflow: hidden;
+}
+
+.header-banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(44, 62, 80, 0.8) 0%, rgba(52, 73, 94, 0.6) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-text {
+  text-align: center;
+  color: white;
+}
+
+.banner-text h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.banner-text p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
 /* Hero Section */
 .hero {
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   color: white;
   text-align: center;
-  padding: 120px 0 80px;
-  margin-top: 70px;
+  padding: 80px 0 60px;
+  margin-top: 0;
 }
 
 .hero-content h1 {
@@ -84,9 +130,49 @@ body {
 
 .hero-subtitle {
   font-size: 1.4rem;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   opacity: 0.9;
   font-weight: 300;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 0 30px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  min-width: 150px;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #3498db;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-coach-name {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  font-style: italic;
+  margin-top: 20px;
 }
 
 .cta-button {
@@ -355,15 +441,19 @@ body {
 
 .achievement-image {
   position: relative;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
+  border-radius: 8px;
+  background-color: #f8f9fa;
 }
 
 .achievement-photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition: transform 0.3s ease;
+  background-color: white;
 }
 
 .achievement-item:hover .achievement-photo {
@@ -845,8 +935,38 @@ footer {
     display: none;
   }
   
+  .banner-image {
+    height: 250px;
+  }
+  
+  .banner-text h2 {
+    font-size: 1.8rem;
+  }
+  
+  .banner-text p {
+    font-size: 1rem;
+  }
+  
   .hero-content h1 {
     font-size: 2.5rem;
+  }
+  
+  .hero-stats {
+    gap: 20px;
+    margin: 30px 0 20px;
+  }
+  
+  .stat-item {
+    min-width: 120px;
+    padding: 15px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
   }
   
   .about-content {
